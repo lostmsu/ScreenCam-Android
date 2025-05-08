@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2016. Vijai Chandra Prasad R.
+  ~ Copyright (c) 2016-2018. Vijai Chandra Prasad R.
   ~
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
     <PreferenceCategory android:title="@string/prefs_category_video_settings_title">
 
         <ListPreference
-            android:defaultValue="1440x2560"
-            android:entries="@array/resolutionsArray_16_9"
-            android:entryValues="@array/resolutionValues_16_9"
+            android:defaultValue="1080"
+            android:entries="@array/resolutionsArray"
+            android:entryValues="@array/resolutionValues"
             android:key="@string/res_key"
             android:summary="@string/preference_resolution_summary"
             android:title="@string/preference_resolution_title" />
@@ -42,13 +42,45 @@
             android:summary="@string/preference_bit_summary"
             android:title="@string/preference_bit_title" />
 
+        <ListPreference
+            android:defaultValue="auto"
+            android:entries="@array/orientationEntries"
+            android:entryValues="@array/orientationValues"
+            android:key="@string/orientation_key"
+            android:summary="@string/preference_orientation_summary"
+            android:title="@string/preference_orientation_title" />
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefs_category_audio_settings_title">
-        <CheckBoxPreference
-            android:defaultValue="false"
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/audioSettingsEntries"
+            android:entryValues="@array/audioSettingsValues"
             android:key="@string/audiorec_key"
             android:summary="@string/preference_audio_record_summary"
             android:title="@string/preference_audio_record_title" />
+
+        <ListPreference
+            android:defaultValue="192000"
+            android:entries="@array/audioBitRates"
+            android:entryValues="@array/audioBitRateValues"
+            android:key="@string/audiobitrate_key"
+            android:summary=""
+            android:title="@string/preference_audio_bitrate_title" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/audioChannels"
+            android:entryValues="@array/audioChannelValues"
+            android:key="@string/audiochannels_key"
+            android:summary=""
+            android:title="@string/preference_audio_channel_title" />
+        <ListPreference
+            android:entries="@array/audioSamplingRates"
+            android:entryValues="@array/audioSamplingRateValues"
+            android:key="@string/audiosamplingrate_key"
+            android:summary=""
+            android:title="@string/preference_audio_sampling_rate_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/prefs_category_save_options_title">
         <com.orpheusdroid.screenrecorder.folderpicker.FolderChooser
@@ -106,6 +138,7 @@
             android:defaultValue="100"
             android:max="200"
             android:persistent="true"
+            android:dependency="@string/preference_floating_control_key"
             />
         <CheckBoxPreference
             android:title="@string/preference_show_touch_title"
@@ -113,6 +146,11 @@
             android:key="@string/preference_show_touch_key"
             android:defaultValue="false" />
 
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="@string/preference_camera_overlay_key"
+            android:summary="@string/preference_camera_overlay_summary"
+            android:title="@string/preference_camera_overlay_title" />
         <CheckBoxPreference
             android:title="@string/preference_enable_target_app_title"
             android:summary="@string/preference_enable_target_app_summary"
@@ -126,21 +164,33 @@
             android:defaultValue="none"
             android:dependency="@string/preference_enable_target_app_key"/>
     </PreferenceCategory>
-    <PreferenceCategory
-        android:title="@string/prefs_category_experimental_title"
-        >
+    <PreferenceCategory android:title="@string/preference_category_misc_title">
+        <Preference
+            android:key="@string/preference_magisk_download_key"
+            android:summary="@string/preference_magisk_download_summary"
+            android:title="@string/preference_magisk_download_title" />
+        <Preference
+            android:key="@string/preference_faq_key"
+            android:summary="@string/preference_faq_summary"
+            android:title="@string/preference_faq_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/prefs_category_experimental_title">
         <CheckBoxPreference
             android:title="@string/preference_save_gif_title"
             android:summary="@string/preference_save_gif_summary"
             android:key="@string/preference_save_gif_key"
-            android:defaultValue="false"
-            />
+            android:defaultValue="false" />
         <CheckBoxPreference
             android:title="@string/preference_shake_gesture_title"
             android:summary="@string/preference_shake_gesture_summary"
             android:key="@string/preference_shake_gesture_key"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
             android:defaultValue="false"
-            />
+            android:key="@string/preference_sysui_demo_mode_key"
+            android:summary="@string/preference_sysui_demo_mode_summary"
+            android:title="@string/preference_sysui_demo_mode_title" />
         <Preference
             android:title=""
             android:summary=""

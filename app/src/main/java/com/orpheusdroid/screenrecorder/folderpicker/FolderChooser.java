@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2017. Vijai Chandra Prasad R.
+ * Copyright (c) 2016-2018. Vijai Chandra Prasad R.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,15 +21,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -56,6 +53,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import androidx.core.os.EnvironmentCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by vijai on 01-12-2016.
@@ -91,12 +93,15 @@ public class FolderChooser extends DialogPreference implements View.OnClickListe
         currentDir = new File(Environment.getExternalStorageDirectory() + File.separator + Const.APPDIR);
         setSummary(getPersistedString(currentDir.getPath()));
         Log.d(Const.TAG, "Persisted String is: " + getPersistedString(currentDir.getPath()));
-        File[] SDCards = ContextCompat.getExternalFilesDirs(getContext().getApplicationContext(), null);
+        //File[] SDCards = ContextCompat.getExternalFilesDirs(getContext().getApplicationContext(), null);
         storages.add(new Storages(Environment.getExternalStorageDirectory().getPath(), Storages.StorageType.Internal));
         prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if (SDCards.length > 1)
-            storages.add(new Storages(SDCards[1].getPath(), Storages.StorageType.External));
+        /*if (SDCards.length > 1)
+            storages.add(new Storages(SDCards[1].getPath(), Storages.StorageType.External));*/
         //getRemovableSDPath(SDCards[1]);
+        Log.d(Const.TAG, "Total storages: " + getExternalStorageDirectories().length);
+        for (String path : getExternalStorageDirectories())
+            Log.d(Const.TAG, "storage path: " + path);
     }
 
     @Override
@@ -149,7 +154,7 @@ public class FolderChooser extends DialogPreference implements View.OnClickListe
 
     private void initRecyclerView() {
         rv.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         rv.setLayoutManager(layoutManager);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), layoutManager.getOrientation());
         rv.addItemDecoration(dividerItemDecoration);
@@ -173,6 +178,9 @@ public class FolderChooser extends DialogPreference implements View.OnClickListe
     }
 
     private void generateFoldersList() {
+        if (!currentDir.exists()){
+            currentDir.mkdir();
+        }
         File[] dir = currentDir.listFiles(new DirectoryFilter());
         directories = new ArrayList<>(Arrays.asList(dir));
         Collections.sort(directories, new SortFileName());
@@ -327,6 +335,85 @@ public class FolderChooser extends DialogPreference implements View.OnClickListe
                 newDirDialog(null);
                 return;
         }
+    }
+
+    /* returns external storage paths (directory of external memory card) as array of Strings */
+    public String[] getExternalStorageDirectories() {
+
+        List<String> results = new ArrayList<>();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //Method 1 for KitKat & above
+            File[] externalDirs = getContext().getExternalFilesDirs(null);
+            String internalRoot = Environment.getExternalStorageDirectory().getAbsolutePath().toLowerCase();
+
+            for (File file : externalDirs) {
+                if (file == null) //solved NPE on some Lollipop devices
+                    continue;
+                String path = file.getPath().split("/Android")[0];
+
+                if (path.toLowerCase().startsWith(internalRoot))
+                    continue;
+
+                boolean addPath = false;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    addPath = Environment.isExternalStorageRemovable(file);
+                } else {
+                    addPath = Environment.MEDIA_MOUNTED.equals(EnvironmentCompat.getStorageState(file));
+                }
+
+                if (addPath) {
+                    results.add(path);
+                }
+            }
+        }
+
+        /*if(results.isEmpty()) { //Method 2 for all versions
+            // better variation of: http://stackoverflow.com/a/40123073/5002496
+            String output = "";
+            try {
+                final Process process = new ProcessBuilder().command("mount | grep /dev/block/vold")
+                        .redirectErrorStream(true).start();
+                process.waitFor();
+                final InputStream is = process.getInputStream();
+                final byte[] buffer = new byte[1024];
+                while (is.read(buffer) != -1) {
+                    output = output + new String(buffer);
+                }
+                is.close();
+            } catch (final Exception e) {
+                e.printStackTrace();
+            }
+            if(!output.trim().isEmpty()) {
+                String devicePoints[] = output.split("\n");
+                for(String voldPoint: devicePoints) {
+                    results.add(voldPoint.split(" ")[2]);
+                }
+            }
+        }*/
+
+        //Below few lines is to remove paths which may not be external memory card, like OTG (feel free to comment them out)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (int i = 0; i < results.size(); i++) {
+                if (!results.get(i).toLowerCase().matches(".*[0-9a-f]{4}[-][0-9a-f]{4}")) {
+                    Log.d(Const.TAG, results.get(i) + " might not be extSDcard");
+                    results.remove(i--);
+                }
+            }
+        } else {
+            for (int i = 0; i < results.size(); i++) {
+                if (!results.get(i).toLowerCase().contains("ext") && !results.get(i).toLowerCase().contains("sdcard")) {
+                    Log.d(Const.TAG, results.get(i) + " might not be extSDcard");
+                    results.remove(i--);
+                }
+            }
+        }
+
+        results.add(Environment.getExternalStorageDirectory().getAbsolutePath().toLowerCase());
+        String[] storageDirectories = new String[results.size()];
+        for (int i = 0; i < results.size(); ++i) storageDirectories[i] = results.get(i);
+
+        return storageDirectories;
     }
 
     private void changeExternalDirectory(File parentDirectory) {

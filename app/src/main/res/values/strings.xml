@@ -1,3 +1,20 @@
+<!--
+  ~ Copyright (c) 2016-2018. Vijai Chandra Prasad R.
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see http://www.gnu.org/licenses
+  -->
+
 <resources>
     <string name="app_name" translatable="false">ScreenCam</string>
     <string name="preference_resolution_title">Resolution</string>
@@ -6,13 +23,13 @@
     <string name="preference_fps_summary">Choose fps to record at</string>
     <string name="preference_bit_title">Bit rate</string>
     <string name="preference_bit_summary">Choose bit rate</string>
-    <string name="preference_audio_record_title">Record audio</string>
+    <string name="preference_audio_record_title">Audio Source</string>
     <string name="preference_audio_record_summary">Records audio from mic along with screen video</string>
     <string name="preference_save_location_title">Save location</string>
     <string name="res_key" translatable="false">resolution</string>
     <string name="fps_key" translatable="false">fps</string>
     <string name="bitrate_key" translatable="false">bitrate</string>
-    <string name="audiorec_key" translatable="false">audiorec</string>
+    <string name="audiorec_key" translatable="false">audiorecloc</string>
     <string name="savelocation_key" translatable="false">savelocation</string>
     <string name="filename_key" translatable="false">filename</string>
     <string name="preference_filename_format_title">File name format</string>
@@ -27,7 +44,7 @@
     <string name="screen_recording_notification_action_stop">Stop</string>
     <string name="screen_recording_notification_action_pause">Pause</string>
     <string name="screen_recording_notification_action_resume">Resume</string>
-    <string name="fatal_exception_message">ScreenRecorder: Fatal Exception occurred. Log has been sent</string>
+    <string name="fatal_exception_message">ScreenRecorder: Saving video failed! Log will be sent if enabled.</string>
     <string name="about_activity_label">About</string>
     <string name="snackbar_storage_permission_message">Grant storage perm</string>
     <string name="snackbar_storage_permission_action_enable">ENABLE</string>
@@ -35,14 +52,15 @@
     <string name="about_credits">Credits</string>
     <string name="about_libraries">Libraries</string>
     <string name="about_opensource">Open Source</string>
-    <string name="app_icon_credit_Niko">App Icons by %1$s\n\nwebsite: %2$s\n\nwebsite: %2$s\n\nAll rights reserved by the designer with exclusive forever license for the official app only</string>
+    <string name="app_icon_credit_Niko">App Icons by %1$s\n\nwebsite: %2$s\n\nAll rights reserved by the designer with exclusive forever license for the official app only</string>
     <string name="video_editor_library_credit">Video Editor by %1$s\n\nGithub url: %2$s\n\nLicense: %3$s</string>
     <string name="analytics_library_credit">Crash reporting and analytics SDK by %1$s\n\nGithub url: %2$s\n\nLicense: %3$s</string>
-    <string name="opensource_info">This app is opensourced and the source could be obained at \n\nGithub url: %1$s\n\nLicense: %2$s</string>
+    <string name="iap_library_credit">In-app purchase helper library by %1$s\n\nGithub url: %2$s\n\nLicense: %3$s</string>
+    <string name="changelog_library_credit">Changelog display library by %1$s\n\nGithub url: %2$s\n\nLicense: %3$s</string>
+    <string name="opensource_info">This app is open source and the source could be obtained at \n\nGitlab url: %1$s\n\nLicense: %2$s</string>
     <string name="fab_record_hint">Start recording</string>
     <string name="recording_failed_toast">Screen recording failed.</string>
     <string name="screenrecording_already_active_toast">Screen recording session already active</string>
-    <string name="large_resolution_selected_toast">The selected resolution is larger than display resolution. Using %1$s resolution instead</string>
     <string name="shortcut_short_label">Record</string>
     <string name="shortcut_long_label">Quick Record</string>
     <string name="shortcut_disabled_message">Recording disabled</string>
@@ -51,7 +69,6 @@
     <string name="screen_recording_stopped_toast">Screen Recording stopped</string>
     <string name="screen_recording_resumed_toast">Screen Recording resumed</string>
     <string name="screen_recording_paused_toast">Screen Recording paused</string>
-    <string name="fab_stop_hint">Stop recording</string>
     <string name="share_intent_title">Share recorded</string>
     <string name="share_intent_notification_title">Share recorded video</string>
     <string name="share_intent_notification_content">click to open the recorded videos</string>
@@ -93,7 +110,7 @@
     <string name="alert_external_storage_warn_cb_text">Do not show again</string>
     <string name="alert_ext_dir_warning_title">Warning</string>
     <string name="alert_ext_dir_warning_message">Saving to external directory may not work on all phones. Proceed with caution.</string>
-    <string name="prefs_category_experimental_title">Expertmental</string>
+    <string name="prefs_category_experimental_title">Experimental</string>
     <string name="preference_save_gif_title">Enable saving in GIF</string>
     <string name="preference_save_gif_summary">Enables saving videos as GIF animation</string>
     <string name="preference_save_gif_key" translatable="false">save_gif</string>
@@ -120,6 +137,39 @@
     <string name="quick_settings_tile_default_title">Add ScreenCam tile</string>
     <string name="quick_settings_tile_start_title">Start recording</string>
     <string name="quick_settings_tile_stop_title">Stop recording</string>
+    <string name="orientation_key" translatable="false">orientation</string>
+    <string name="preference_orientation_summary">Default orientation</string>
+    <string name="preference_orientation_title">Orientation</string>
+    <string name="toast_message_countly_activity_restart">Restarting activity for new settings to take effect</string>
+    <string name="toast_message_bitrate_high_warning">Bit rate too high! May not work for all</string>
+    <string name="preference_camera_overlay_title">Show Camera Overlay</string>
+    <string name="preference_camera_overlay_summary">Enable/Disable Camera overlay. You can switch between front and back camera</string>
+    <string name="preference_camera_overlay_key" translatable="false">camera_overlay</string>
+    <string name="alert_dialog_internal_audio_warning_title">Warning</string>
+    <string name="alert_dialog_internal_audio_warning_message">Internal audio recording records audio along with mic audio.\nAlso, it does not work on all phones (Confirmed working on OnePlus, Xiaomi, and few Moto phones). You might try your luck</string>
+    <string name="alert_dialog_r_submix_audio_warning_message">Recording internal audio using submix will require you to install the magisk systemizer module. You will not be able to hear any audio while recording and this is not a bug.\n\n Read FAQ to know more</string>
+    <string name="alert_dialog_internal_audio_warning_faq_text">Show FAQ</string>
+    <string name="alert_dialog_internal_audio_warning_negative_btn_text">Do not show this message again</string>
+    <string name="preference_magisk_download_key" translatable="false">magisk_download_key</string>
+    <string name="preference_faq_key" translatable="false">faq</string>
+    <string name="preference_magisk_download_title">ScreenCam Magisk Module</string>
+    <string name="preference_magisk_download_summary">Download magisk module for enabling internal audio recording</string>
+    <string name="preference_faq_title">FAQ</string>
+    <string name="preference_faq_summary">Frequently Asked Questions and Answers</string>
+    <string name="preference_category_misc_title">Misc</string>
+    <string name="preference_sysui_demo_mode_title">SystemUI Demo Mode</string>
+    <string name="toast_magisk_module_required_message">Magisk module is required</string>
+    <string name="preference_sysui_demo_mode_summary">Enable SystemUI Demo Mode</string>
+    <string name="preference_sysui_demo_mode_key" translatable="false">sysui_demo</string>
+    <string name="toast_msg_root_failed">Acquiring root access failed.</string>
+    <string name="shortcut_storage_permission_request_title">Please grant Storage permission before using shortcut</string>
+    <string name="audiobitrate_key" translatable="false">audiobitrate</string>
+    <string name="audiochannels_key" translatable="false">audiochannels</string>
+    <string name="audiosamplingrate_key" translatable="false">audiosamplingrate</string>
+    <string name="preference_audio_bitrate_title">Audio Bitrate</string>
+    <string name="preference_audio_channel_title">Audio channel</string>
+    <string name="preference_audio_sampling_rate_title">Audio sampling rate</string>
+    <string name="preference_audio_settings_unavailable_summary">This setting is unavailable for the selected audio source</string>
     <plurals name="delete_alert_title">
         <item quantity="zero">Delete video?</item>
         <item quantity="one">Delete video?</item>

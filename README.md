@@ -1,9 +1,4 @@
-# NOTICE
-## This repository has been moved to Gitlab. The repo is archieved and is read-only now. Please go to [Gitlab](https://gitlab.com/vijai/screenrecorder) to get updates and participate on issues.
-
-Gitlab url: https://gitlab.com/vijai/screenrecorder
-
-# ScreenRecorder   [![Build Status](https://travis-ci.org/vijai1996/screenrecorder.svg?branch=master)](https://travis-ci.org/vijai1996/screenrecorder)
+# ScreenRecorder   [![pipeline status](https://gitlab.com/vijai/screenrecorder/badges/master/pipeline.svg)](https://gitlab.com/vijai/screenrecorder/commits/master) [![Crowdin](https://d322cqt584bo4o.cloudfront.net/screencam/localized.svg)](https://crowdin.com/project/screencam)
 ![App Icon](ic_launcher-web.png?raw=true "App Icon")
 
 Requires Lollipop and above (SDK 21+)
@@ -21,7 +16,6 @@ Telegram: [https://goo.gl/TDs42r](https://goo.gl/TDs42r)
 Slack:    Comming soon!
 
 ## Donation/Payments
-#### Bitcoin:     1Cbf61y8XNx3BLWvoZB71x4XgBKB7r8BuB
 #### PayPal:      [![Paypal Donate](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/gold-pill-paypal-26px.png)](https://paypal.me/vijaichander/5)
 #### Flattr:      [![Flattr this git repo](https://button.flattr.com/flattr-badge-large.png)](https://flattr.com/submit/auto?fid=66ngyo&url=https%3A%2F%2Fgithub.com%2Fvijai1996%2Fscreenrecorder)
 
@@ -32,14 +26,14 @@ Slack:    Comming soon!
 Make sure to have Git installed and clone the repo using
 
 ```
-git clone https://github.com/vijai1996/screenrecorder
+git clone https://gitlab.com/vijai/screenrecorder
 ```
 
 ### Building the apk
 Building apk is possible in 3 ways
-* 1.a. [Building debug apk using commandline](https://github.com/vijai1996/screenrecorder#1a-building-debug-apk-using-commandline)
-* 1.b. [Building release apk using commandline](https://github.com/vijai1996/screenrecorder#1b-building-release-apk-using-commandline)
-* 2.   [Building using AndroidStudio](https://github.com/vijai1996/screenrecorder#2-building-using-androidstudio)
+* 1.a. [Building debug apk using commandline](#1a-building-debug-apk-using-commandline)
+* 1.b. [Building release apk using commandline](#1b-building-release-apk-using-commandline)
+* 2.   [Building using AndroidStudio](#2-building-using-androidstudio)
 
 ### 1.a. Building debug apk using commandline
 Switch to project root directory and run
@@ -82,7 +76,7 @@ If you notice any content which seem to be infringing, please fill the below goo
 
 ## Authors
 
-* **Vijai Chander** - *Initial work* - [vijai1996](https://github.com/vijai1996)
+* **Vijai Chander** - *Initial work* - [vijai](https://gitlab.com/vijai)
 
 ## License
 
